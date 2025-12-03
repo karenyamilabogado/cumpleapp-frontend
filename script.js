@@ -5,7 +5,7 @@ document.getElementById("formCumple").addEventListener("submit", async (e) => {
   const fecha = document.getElementById("fecha").value;
 
   try {
-    const res = await fetch("https://cumpleapp-backend.onrender.com/cumples", {
+    const res = await fetch("https://cumpleapp-backend.onrender.com/save", {  // 🔧 CORREGIDO
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -13,11 +13,13 @@ document.getElementById("formCumple").addEventListener("submit", async (e) => {
       body: JSON.stringify({ nombre, fecha })
     });
 
+    const data = await res.json();
+
     if (res.ok) {
-      alert("Cumpleaños guardado con éxito");
+      alert(data.mensaje);   // ✅ muestra el mensaje del backend
       document.getElementById("formCumple").reset();
     } else {
-      alert("Error al guardar");
+      alert(data.error || "Error al guardar");
     }
   } catch (error) {
     console.error("Error en el fetch:", error);
