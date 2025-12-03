@@ -56,18 +56,19 @@
       }
 
       try {
-        const res = await fetch(`${API_BASE}/save`, {   <!-- 🔧 CORREGIDO -->
+        const res = await fetch(`${API_BASE}/save`, {   // ✅ CORRECTO
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nombre, fecha })
         });
 
         const data = await res.json();
-        alert(data.mensaje || data.error);
-
         if (res.ok) {
+          alert(data.mensaje);
           cargarCumples();
           document.getElementById("formCumple").reset();
+        } else {
+          alert(data.error || "Error al guardar");
         }
       } catch (error) {
         console.error("Error al guardar cumpleaños:", error);
