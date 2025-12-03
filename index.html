@@ -14,31 +14,21 @@
     <button type="submit">Guardar</button>
   </form>
 
-  <!-- Lista de cumpleaños -->
-  <h2>Lista de cumpleaños</h2>
-  <ul id="listaCumples"></ul>
+  <!-- ❌ Ocultamos la lista de cumpleaños -->
+  <!-- <h2>Lista de cumpleaños</h2>
+  <ul id="listaCumples"></ul> -->
 
   <!-- Script -->
   <script>
     const API_BASE = "https://cumpleapp-backend.onrender.com";
 
-    // 👉 Función para cargar y mostrar los cumpleaños guardados
+    // 👉 Función para cargar y mostrar los cumpleaños guardados (ya no se usa en el frontend)
     async function cargarCumples() {
       try {
         const res = await fetch(`${API_BASE}/cumples`);
         const data = await res.json();
-        const lista = document.getElementById("listaCumples");
-        lista.innerHTML = "";
-        data.forEach(c => {
-          const li = document.createElement("li");
-          const fechaFormateada = new Date(c.fecha).toLocaleDateString("es-ES", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-          });
-          li.textContent = `${c.nombre} — ${fechaFormateada}`;
-          lista.appendChild(li);
-        });
+        // Eliminamos el código que mostraba la lista
+        console.log("Cumpleaños guardados en la base:", data);
       } catch (error) {
         console.error("Error al cargar cumpleaños:", error);
       }
@@ -56,7 +46,7 @@
       }
 
       try {
-        const res = await fetch(`${API_BASE}/save`, {   // ✅ CORRECTO
+        const res = await fetch(`${API_BASE}/save`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nombre, fecha })
@@ -65,7 +55,6 @@
         const data = await res.json();
         if (res.ok) {
           alert(data.mensaje);
-          cargarCumples();
           document.getElementById("formCumple").reset();
         } else {
           alert(data.error || "Error al guardar");
@@ -76,8 +65,8 @@
       }
     });
 
-    // 👉 Cargar lista al inicio
-    cargarCumples();
+    // 👉 Ya no mostramos la lista al inicio
+    // cargarCumples();
   </script>
 </body>
 </html>
